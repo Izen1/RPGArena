@@ -18,7 +18,7 @@ import org.bukkit.event.Listener;
 import java.util.*;
 
 public class MobSpawner implements MobController, Listener {
-    public Map<UUID, Entity> activeMobMap = new HashMap<>();
+    public static Map<UUID, Entity> activeMobMap = new HashMap<>();
 
 
     @Override
