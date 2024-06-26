@@ -7,6 +7,7 @@ import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import kr.kro.izen.rpgarena.RPGArena;
+import kr.kro.izen.rpgarena.round.Round;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -17,7 +18,7 @@ import org.bukkit.event.Listener;
 import java.util.*;
 
 public class MobSpawner implements MobController, Listener {
-    public Map<UUID, ActiveMob> activeMobMap = new HashMap<>();
+    public Map<UUID, Entity> activeMobMap = new HashMap<>();
 
 
     @Override
@@ -33,7 +34,9 @@ public class MobSpawner implements MobController, Listener {
         Bukkit.getScheduler().runTaskLater(RPGArena.plugin, () -> {
             for (int i = 0; i < round; i++) {
                 ActiveMob spawn = finalMob.spawn(BukkitAdapter.adapt(location), 1);
-                activeMobMap.put(spawn.getUniqueId(), spawn);
+                Entity entity = spawn.getEntity().getBukkitEntity();
+                activeMobMap.put(spawn.getUniqueId(), entity);
+                System.out.println(activeMobMap);
             }
         }, 100L);
 
@@ -41,17 +44,21 @@ public class MobSpawner implements MobController, Listener {
 
     @Override
     public void clearMob() {
-        activeMobMap.values().forEach(ActiveMob::remove);
+        activeMobMap.values().forEach(Entity::remove);
         activeMobMap.clear();
     }
 
     @EventHandler
     public void onMythicMobDeath(MythicMobDeathEvent event) {
         ActiveMob activeMob = event.getMob();
+        Round round = new Round();
+        System.out.println(activeMobMap);
         activeMobMap.remove(activeMob.getUniqueId());
-        if (event.getKiller() instanceof Player player) {
-            player.sendMessage(activeMobMap.toString());
-        }
+        if (!(event.getKiller() instanceof Player player)) return;
+        if (getMob()) return;
+        player.sendMessage(activeMobMap.toString());
+        System.out.println(activeMobMap);
+        round.nextRound(player);
     }
 
     @Override

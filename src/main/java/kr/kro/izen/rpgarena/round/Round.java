@@ -22,7 +22,6 @@ public class Round implements RoundController{
 
     @Override
     public void nextRound(Player player) {
-        if (mobSpawner.getMob()) return;
         RewardGet.open(player);
         roundMap.put(player.getName(), roundMap.getOrDefault(player.getName(), 1) + 1);
         mobSpawner.spawnMob(player.getLocation(), roundMap.get(player.getName()));

@@ -37,13 +37,6 @@ public class GameSetup implements GameController{
         player.sendMessage("5초후 라운드가 시작됩니다.");
         round.startRound(player);
         mobSpawner.spawnMob(location, round.getRound(player));
-
-        Bukkit.getScheduler().runTaskTimer(RPGArena.plugin, task -> {
-            if (!isStarting()) task.cancel();
-            player.sendMessage(round.getRound(player) + "");
-            player.sendMessage(mobSpawner.getMob() + "");
-            round.nextRound(player);
-        }, 100L, 20L);
     }
 
     @Override
