@@ -1,0 +1,4 @@
+name: RPGArena
+version: '${version}'
+main: kr.kro.izen.rpgarena.RPGArena
+api-version: '1.20'
