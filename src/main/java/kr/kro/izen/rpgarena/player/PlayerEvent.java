@@ -10,9 +10,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerEvent implements Listener {
 
-    public boolean playerDeath = false;
-    private final GameSetup setup = new GameSetup();
     private final SaveJson json = new SaveJson();
+    private GameSetup setup;
+
+    public PlayerEvent(GameSetup gameSetup) {
+        this.setup = gameSetup;
+    }
 
     @EventHandler
     public void playerDeathEvent(PlayerDeathEvent event) {

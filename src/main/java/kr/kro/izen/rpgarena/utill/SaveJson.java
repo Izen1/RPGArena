@@ -24,7 +24,7 @@ public class SaveJson {
             }
         }
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path.toFile()))) {
-            gson.toJson(Round.roundMap, bufferedWriter);
+            gson.toJson(Round.MAXroundMap, bufferedWriter);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -36,7 +36,7 @@ public class SaveJson {
             Type type = new TypeToken<Map<String, Integer>>() {}.getType();
             Map<String, Integer> data = gson.fromJson(reader, type);
             if (data != null) {
-                Round.roundMap.putAll(data);
+                Round.MAXroundMap.putAll(data);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

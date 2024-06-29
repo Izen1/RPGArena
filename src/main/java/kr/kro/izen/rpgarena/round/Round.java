@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class Round implements RoundController{
     public static Map<String, Integer> roundMap = Maps.newHashMap();
+    public static Map<String, Integer> MAXroundMap = Maps.newHashMap();
     private final SaveJson json = new SaveJson();
     private final MobSpawner mobSpawner = new MobSpawner();
 
@@ -29,6 +30,9 @@ public class Round implements RoundController{
 
     @Override
     public void endRound(Player player) {
+        if (MAXroundMap.getOrDefault(player.getName(), 1) < roundMap.getOrDefault(player.getName(), 1)) {
+            MAXroundMap.put(player.getName(), roundMap.getOrDefault(player.getName(), 1));
+        }
         json.saveLog(player);
         roundMap.remove(player.getName());
         mobSpawner.clearMob();
@@ -37,6 +41,11 @@ public class Round implements RoundController{
     @Override
     public int getRound(Player player) {
         return roundMap.getOrDefault(player.getName(), 1);
+    }
+
+    @Override
+    public int getMaxRound(Player player) {
+        return MAXroundMap.getOrDefault(player.getName(), 1);
     }
 
 }

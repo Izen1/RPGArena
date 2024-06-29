@@ -10,7 +10,6 @@ import java.util.List;
 public class ArenaField implements ArenaCreate{
 
     private final List<Block> arenaBlocks = Lists.newArrayList();
-    private double worldBorderSize;
 
     @Override
     public void setup(Location location, Player player) {
@@ -46,7 +45,6 @@ public class ArenaField implements ArenaCreate{
 
     @Override
     public void worldBorder(Location location, Integer size) {
-        worldBorderSize = location.getWorld().getWorldBorder().getSize();
         World world = location.getWorld();
         WorldBorder worldBorder = world.getWorldBorder();
         worldBorder.setCenter(location);
@@ -57,7 +55,7 @@ public class ArenaField implements ArenaCreate{
     public void resetWorldBorder(Location location) {
         World world = location.getWorld();
         WorldBorder worldBorder = world.getWorldBorder();
-        worldBorder.setCenter(location);
+        worldBorder.setCenter(world.getSpawnLocation());
         worldBorder.setSize(worldBorder.getMaxSize());
     }
 }

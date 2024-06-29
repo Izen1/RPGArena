@@ -19,8 +19,6 @@ public class GameSetup implements GameController{
     private final ArenaField arenaField = new ArenaField();
     private final MobSpawner mobSpawner = new MobSpawner();
     private final Round round = new Round();
-    private final BowSkill bowSkill = new BowSkill();
-    private final SaveJson json = new SaveJson();
 
     private Map<Player, Location> playerMap = new HashMap<>();
 
@@ -42,12 +40,12 @@ public class GameSetup implements GameController{
     @Override
     public void endGame(Player player) {
         starting = false;
-        json.saveLog(player);
         arenaField.clear();
         arenaField.resetWorldBorder(player.getLocation());
         player.teleport(playerMap.get(player));
         playerMap.remove(player);
-        mobSpawner.clearMob();
+        player.sendMessage("당신의 현재 라운드는 " + round.getRound(player) + " 이고 최종 라운드는 " + Round.MAXroundMap.get(player.getName()) + " 입니다.");
+        round.endRound(player);
     }
 
     @Override
@@ -57,6 +55,6 @@ public class GameSetup implements GameController{
 
     @Override
     public void getLogs(Player player) {
-        player.sendMessage("당신의 최대 라운드 수는 " + round.getRound(player) + " 입니다.");
+        player.sendMessage("당신의 최대 라운드 수는 " + round.getMaxRound(player) + " 입니다.");
     }
 }

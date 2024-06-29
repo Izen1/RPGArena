@@ -7,4 +7,5 @@ public interface RoundController {
     void nextRound(Player player);
     void endRound(Player player);
     int getRound(Player player);
+    int getMaxRound(Player player);
 }

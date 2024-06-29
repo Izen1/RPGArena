@@ -10,6 +10,7 @@ import kr.kro.izen.rpgarena.game.GameSetup;
 import kr.kro.izen.rpgarena.gui.ChoseWeapon;
 import kr.kro.izen.rpgarena.gui.RewardGet;
 import kr.kro.izen.rpgarena.mob.MobSpawner;
+import kr.kro.izen.rpgarena.player.PlayerEvent;
 import kr.kro.izen.rpgarena.skill.SkillEvent;
 import kr.kro.izen.rpgarena.skill.SkillManager;
 import kr.kro.izen.rpgarena.utill.SaveJson;
@@ -35,10 +36,12 @@ public final class RPGArena extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ChoseWeapon(), this);
         Bukkit.getPluginManager().registerEvents(new RewardGet(), this);
         Bukkit.getPluginManager().registerEvents(new MobSpawner(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerEvent(gameSetup), this);
     }
 
     @Override
     public void onDisable() {
+        if (!gameSetup.isStarting()) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             gameSetup.endGame(player);
         }

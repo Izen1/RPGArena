@@ -1,6 +1,5 @@
 package kr.kro.izen.rpgarena.mob;
 
-import com.google.common.collect.Sets;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
@@ -36,7 +35,6 @@ public class MobSpawner implements MobController, Listener {
                 ActiveMob spawn = finalMob.spawn(BukkitAdapter.adapt(location), 1);
                 Entity entity = spawn.getEntity().getBukkitEntity();
                 activeMobMap.put(spawn.getUniqueId(), entity);
-                System.out.println(activeMobMap);
             }
         }, 100L);
 
@@ -52,17 +50,14 @@ public class MobSpawner implements MobController, Listener {
     public void onMythicMobDeath(MythicMobDeathEvent event) {
         ActiveMob activeMob = event.getMob();
         Round round = new Round();
-        System.out.println(activeMobMap);
         activeMobMap.remove(activeMob.getUniqueId());
         if (!(event.getKiller() instanceof Player player)) return;
-        if (getMob()) return;
-        player.sendMessage(activeMobMap.toString());
-        System.out.println(activeMobMap);
+        if (isAlive()) return;
         round.nextRound(player);
     }
 
     @Override
-    public boolean getMob() {
+    public boolean isAlive() {
         return !activeMobMap.isEmpty();
     }
 }

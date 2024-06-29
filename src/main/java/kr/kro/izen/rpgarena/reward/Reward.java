@@ -22,8 +22,8 @@ public class Reward implements RewardItem{
         PotionMeta meta = (PotionMeta) item.getItemMeta();
 
         if (meta != null) {
-            meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1, true, true, true), true);
-            meta.addCustomEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 1, true, true, true), true);
+            meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 0, true, true, true), true);
+            meta.addCustomEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, true, true), true);
             meta.setColor(Color.RED);
             meta.setDisplayName("§c회복 물약");
             item.setItemMeta(meta);
