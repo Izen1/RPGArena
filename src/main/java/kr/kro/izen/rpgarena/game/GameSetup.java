@@ -2,7 +2,10 @@ package kr.kro.izen.rpgarena.game;
 
 import kr.kro.izen.rpgarena.RPGArena;
 import kr.kro.izen.rpgarena.arena.ArenaField;
+import kr.kro.izen.rpgarena.difficulty.Difficulty;
 import kr.kro.izen.rpgarena.gui.ChoseWeapon;
+import kr.kro.izen.rpgarena.gui.DifficultySelect;
+import kr.kro.izen.rpgarena.gui.GUIevent;
 import kr.kro.izen.rpgarena.gui.RewardGet;
 import kr.kro.izen.rpgarena.mob.MobSpawner;
 import kr.kro.izen.rpgarena.round.Round;
@@ -17,9 +20,8 @@ import java.util.Map;
 
 public class GameSetup implements GameController{
     private final ArenaField arenaField = new ArenaField();
-    private final MobSpawner mobSpawner = new MobSpawner();
     private final Round round = new Round();
-
+    private final MobSpawner mobSpawner = new MobSpawner();
     private Map<Player, Location> playerMap = new HashMap<>();
 
     private boolean starting = false;
@@ -44,8 +46,13 @@ public class GameSetup implements GameController{
         arenaField.resetWorldBorder(player.getLocation());
         player.teleport(playerMap.get(player));
         playerMap.remove(player);
-        player.sendMessage("당신의 현재 라운드는 " + round.getRound(player) + " 이고 최종 라운드는 " + Round.MAXroundMap.get(player.getName()) + " 입니다.");
         round.endRound(player);
+        player.sendMessage("당신의 현재 난이도는 라운드는 " + round.getRound(player) + " 이고 최종 라운드는 " + Round.MAXroundMap.get(player.getName()) + " 입니다.");
+    }
+
+    @Override
+    public void setDifficulty(Player p) {
+        DifficultySelect.open(p);
     }
 
     @Override

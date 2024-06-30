@@ -21,7 +21,7 @@ public class ArenaCommands extends BukkitCommand {
     public boolean execute(@NotNull CommandSender sender, @NotNull String command, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return false;
         if (args.length == 0) {
-            player.sendMessage("올바르지 않은 사용법입니다. /arena < start, stop, logs >");
+            player.sendMessage("올바르지 않은 사용법입니다. /arena < start | stop | set | logs >");
             return true;
         }
         if (args.length == 1) {
@@ -35,6 +35,9 @@ public class ArenaCommands extends BukkitCommand {
                 case "logs" -> {
                     gameSetup.getLogs(player);
                 }
+                case "set" -> {
+                    gameSetup.setDifficulty(player);
+                }
             }
         }
         return false;
@@ -42,7 +45,7 @@ public class ArenaCommands extends BukkitCommand {
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
-        if (args.length == 1) return Arrays.asList("start","stop", "logs");
+        if (args.length == 1) return Arrays.asList("start", "stop", "set", "logs");
         return super.tabComplete(sender, alias, args);
     }
 }

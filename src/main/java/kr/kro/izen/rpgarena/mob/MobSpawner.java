@@ -6,6 +6,7 @@ import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import kr.kro.izen.rpgarena.RPGArena;
+import kr.kro.izen.rpgarena.gui.GUIevent;
 import kr.kro.izen.rpgarena.round.Round;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,21 +14,18 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class MobSpawner implements MobController, Listener {
     public static Map<UUID, Entity> activeMobMap = new HashMap<>();
 
-
     @Override
     public void spawnMob(Location location, Integer round) {
-        MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob("card-soldier").orElse(null);
-        Random random = new Random();
-        int randomMob = random.nextInt(2);
-        if (randomMob < 1) {
-            mob = MythicBukkit.inst().getMobManager().getMythicMob("card-soldier-color").orElse(null);
-        }
+        String mobName = getMobName();
+        System.out.println(mobName);
+        MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(mobName).orElse(null);
         if (mob == null) return;
         MythicMob finalMob = mob;
         Bukkit.getScheduler().runTaskLater(RPGArena.plugin, () -> {
@@ -38,6 +36,28 @@ public class MobSpawner implements MobController, Listener {
             }
         }, 100L);
 
+    }
+
+    @Nullable
+    private static String getMobName() {
+        Random random = new Random();
+        int randomMob = random.nextInt(2);
+        String mobName = null;
+        switch (GUIevent.getDifficulty()) {
+            case EASY -> {
+                if (randomMob < 1) mobName = "card-soldier-easy";
+                else mobName = "card-soldier-color-easy";
+            }
+            case NORMAL -> {
+                if (randomMob < 1) mobName = "card-soldier-normal";
+                else mobName = "card-soldier-color-normal";
+            }
+            case HARD -> {
+                if (randomMob < 1) mobName = "card-soldier-hard";
+                else mobName = "card-soldier-color-hard";
+            }
+        }
+        return mobName;
     }
 
     @Override
