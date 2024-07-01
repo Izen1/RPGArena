@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class BowSkill implements SkillController{
-    private boolean skillUse = false;
+    public static boolean skillUse = false;
 
     @Override
     public void skill(Player player) {

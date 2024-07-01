@@ -5,6 +5,7 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import kr.kro.izen.rpgarena.gui.GUIevent;
 import kr.kro.izen.rpgarena.gui.RewardGet;
 import kr.kro.izen.rpgarena.mob.MobSpawner;
+import kr.kro.izen.rpgarena.skill.BowSkill;
 import kr.kro.izen.rpgarena.utill.SaveJson;
 import org.bukkit.entity.Player;
 
@@ -27,6 +28,7 @@ public class Round implements RoundController{
         RewardGet.open(player);
         roundMap.put(player.getName(), roundMap.getOrDefault(player.getName(), 1) + 1);
         player.sendMessage(roundMap.get(player.getName()) + " 라운드를 시작합니다!");
+        BowSkill.skillUse = false;
         mobSpawner.spawnMob(player.getLocation(), roundMap.get(player.getName()));
     }
 

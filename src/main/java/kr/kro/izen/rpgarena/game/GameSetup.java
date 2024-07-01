@@ -47,7 +47,7 @@ public class GameSetup implements GameController{
         player.teleport(playerMap.get(player));
         playerMap.remove(player);
         round.endRound(player);
-        player.sendMessage("당신의 현재 난이도는 라운드는 " + round.getRound(player) + " 이고 최종 라운드는 " + Round.MAXroundMap.get(player.getName()) + " 입니다.");
+        player.sendMessage("당신의 현재 난이도는 라운드는 " + round.getRound(player) + " 이고 최고 라운드는 " + Round.MAXroundMap.get(player.getName()) + " 입니다.");
     }
 
     @Override
